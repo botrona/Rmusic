@@ -25,7 +25,7 @@ Nem = config.BOT_NAME + " يوت"
 @app.on_message(command(["song", "/song", "بحث", Nem]) & filters.private)
 async def song_downloader1(client, message: Message):
     if not await is_search_enabled1():
-        return await message.reply_text("<b>⟡عذراً عزيزي اليوتيوب معطل من قبل المطور</b>")
+        return await message.reply_text("<b>⟡ عذراً عزيزي اليوتيوب معطل من قبل المطور</b>")
         
     query = " ".join(message.command[1:])
     m = await message.reply_text("<b>⇜ جـارِ البحث ..</b>")
@@ -102,16 +102,16 @@ async def song_downloader1(client, message: Message):
 @app.on_message(command(["تعطيل اليوتيوب بالخاص"]) & filters.user(OWNER_ID))
 async def disable_search_command1(client, message: Message):
     if not await is_search_enabled1():
-        await message.reply_text("<b>⟡اليوتيوب معطل من قبل يالطيب</b>")
+        await message.reply_text("<b>⟡ اليوتيوب معطل من قبل يالطيب</b>")
         return
     await disable_search1()
-    await message.reply_text("<b>⟡تم تعطيل اليوتيوب بنجاح</b>")
+    await message.reply_text("<b>⟡ تم تعطيل اليوتيوب بنجاح</b>")
 
 @app.on_message(command(["تفعيل اليوتيوب بالخاص"]) & filters.user(OWNER_ID))
 async def enable_search_command1(client, message: Message):
     if await is_search_enabled1():
-        await message.reply_text("<b>⟡اليوتيوب مفعل من قبل يالطيب</b>")
+        await message.reply_text("<b>⟡ اليوتيوب مفعل من قبل يالطيب</b>")
         return
     await enable_search1()
-    await message.reply_text("<b>⟡تم تفعيل اليوتيوب بنجاح</b>")
+    await message.reply_text("<b>⟡ تم تفعيل اليوتيوب بنجاح</b>")
   
