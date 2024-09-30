@@ -1,30 +1,27 @@
-from SafoneAPI import SafoneAPI
 import requests
-from pyrogram import filters
-from pyrogram.enums import ChatAction, ParseMode
 from ZeMusic import app
+import time
+from pyrogram.enums import ChatAction, ParseMode
+from pyrogram import filters
+from MukeshAPI import api
 
-api = SafoneAPI()
+@app.on_message(filters.command(["اليس"],""))
+async def chat_gpt(bot, message):
+    try:
+        await bot.send_chat_action(message.chat.id, ChatAction.TYPING)
 
-@app.on_message(filters.command(["اليس"], ""))
-async def bard(bot, message):
-    if len(message.command) < 2 and not message.reply_to_message:
-        await message.reply_text(
+        # Check if name is defined, if not, set a default value
+        name = message.from_user.first_name if message.from_user else "User"
+
+        if len(message.command) < 2:
+            await message.reply_text(
             "-› اكتب **اليس** واي شي تريد تسالة راح يجاوبك.",
             parse_mode=ParseMode.MARKDOWN
         )
-        return
-
-    if message.reply_to_message and message.reply_to_message.text:
-        user_input = message.reply_to_message.text
-    else:
-        user_input = " ".join(message.command[1:])
-
-    try:
-        await bot.send_chat_action(message.chat.id, ChatAction.TYPING)
-        
-        Z = await api.bard(user_input)
-        result = Z["candidates"][0]["content"]["parts"][0]["text"]
-        await message.reply_text(result, parse_mode=ParseMode.MARKDOWN)
-    except requests.exceptions.RequestException as e:
-        pass
+        else:
+            await bot.send_chat_action(message.chat.id, ChatAction.TYPING)
+            query = message.text.split(' ', 1)[1]
+            response = api.gemini(query)["results"]
+            await message.reply_text(f"{response}", parse_mode=ParseMode.MARKDOWN)
+    except Exception as e:
+        await message.reply_text(f"**Error: {e}**")
