@@ -5,7 +5,7 @@ from pyrogram.enums import ChatAction, ParseMode
 from pyrogram import filters
 from MukeshAPI import api
 
-@app.on_message(filters.command(["اليس"],""))
+@app.on_message(filters.command(["اليسا"],""))
 async def chat_gpt(bot, message):
     try:
         await bot.send_chat_action(message.chat.id, ChatAction.TYPING)
@@ -15,7 +15,7 @@ async def chat_gpt(bot, message):
 
         if len(message.command) < 2:
             await message.reply_text(
-            "-› اكتب **اليس** واي شي تريد تسالة راح يجاوبك.",
+            "-› اكتب **اليسا** واي شي تريد تسالة راح يجاوبك.",
             parse_mode=ParseMode.MARKDOWN
         )
         else:
