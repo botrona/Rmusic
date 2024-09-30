@@ -29,7 +29,6 @@ async def song_downloader(client, message: Message):
     if not await is_search_enabled(chat_id):
         return await message.reply_text("<b>⟡عذراً عزيزي اليوتيوب معطل لتفعيل اليوتيوب اكتب تفعيل اليوتيوب</b>")
         
-    thumb_name,
     query = " ".join(message.command[1:])
     m = await message.reply_text("<b>⇜ جـارِ البحث ..</b>")
     
