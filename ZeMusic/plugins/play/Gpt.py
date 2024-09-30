@@ -6,11 +6,11 @@ from ZeMusic import app
 
 api = SafoneAPI()
 
-@app.on_message(filters.command(["رون"], ""))
+@app.on_message(filters.command(["اليس"], ""))
 async def bard(bot, message):
     if len(message.command) < 2 and not message.reply_to_message:
         await message.reply_text(
-            "-› اكتب **رون** واي شي تريد تسالة راح يجاوبك.",
+            "-› اكتب **اليس** واي شي تريد تسالة راح يجاوبك.",
             parse_mode=ParseMode.MARKDOWN
         )
         return
