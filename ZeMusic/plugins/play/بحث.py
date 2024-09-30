@@ -1,5 +1,5 @@
 import os
-import requests
+import re
 import config
 import aiohttp
 import aiofiles
@@ -8,8 +8,7 @@ from config import OWNER_ID
 import yt_dlp
 from yt_dlp import YoutubeDL
 from pyrogram import Client, filters
-from pyrogram.errors import FloodWait
-from pyrogram.types import Message, InputTextMessageContent, InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from youtube_search import YoutubeSearch
 
 from ZeMusic import app
@@ -22,6 +21,7 @@ def remove_if_exists(path):
         
 lnk = config.CHANNEL_LINK
 Nem = config.BOT_NAME + " يوت"
+
 @app.on_message(command(["song", "/song", "بحث", Nem]) & filters.private)
 async def song_downloader1(client, message: Message):
     if not await is_search_enabled1():
@@ -43,8 +43,13 @@ async def song_downloader1(client, message: Message):
         thumb_name = f"{title_clean}.jpg"
         
         # تحميل الصورة المصغرة
-        thumb = requests.get(thumbnail, allow_redirects=True)
-        open(thumb_name, "wb").write(thumb.content)
+        async with aiohttp.ClientSession() as session:
+            async with session.get(thumbnail) as resp:
+                if resp.status == 200:
+                    f = await aiofiles.open(thumb_name, mode='wb')
+                    await f.write(await resp.read())
+                    await f.close()
+
         duration = results[0]["duration"]
 
     except Exception as e:
@@ -119,4 +124,3 @@ async def enable_search_command1(client, message: Message):
         return
     await enable_search1()
     await message.reply_text("<b>⟡ تم تفعيل اليوتيوب بنجاح</b>")
-  
