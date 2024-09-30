@@ -1,5 +1,5 @@
 import os
-import requests
+import re
 import config
 import aiohttp
 import aiofiles
@@ -8,8 +8,7 @@ from ZeMusic.platforms.Youtube import cookie_txt_file
 import yt_dlp
 from yt_dlp import YoutubeDL
 from pyrogram import Client, filters
-from pyrogram.errors import FloodWait
-from pyrogram.types import Message, InputTextMessageContent, InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from youtube_search import YoutubeSearch
 
 from ZeMusic import app
@@ -23,6 +22,7 @@ def remove_if_exists(path):
         
 lnk = config.CHANNEL_LINK
 Nem = config.BOT_NAME + " ابحث"
+
 @app.on_message(command(["song", "/song", "بحث", Nem]) & filters.group)
 async def song_downloader(client, message: Message):
     chat_id = message.chat.id 
@@ -43,10 +43,15 @@ async def song_downloader(client, message: Message):
         title_clean = re.sub(r'[\\/*?:"<>|]', "", title)  # تنظيف اسم الملف
         thumbnail = results[0]["thumbnails"][0]
         thumb_name = f"{title_clean}.jpg"
-        
+
         # تحميل الصورة المصغرة
-        thumb = requests.get(thumbnail, allow_redirects=True)
-        open(thumb_name, "wb").write(thumb.content)
+        async with aiohttp.ClientSession() as session:
+            async with session.get(thumbnail) as resp:
+                if resp.status == 200:
+                    f = await aiofiles.open(thumb_name, mode='wb')
+                    await f.write(await resp.read())
+                    await f.close()
+
         duration = results[0]["duration"]
 
     except Exception as e:
@@ -104,7 +109,6 @@ async def song_downloader(client, message: Message):
         remove_if_exists(thumb_name)
     except Exception as e:
         print(e)
-
 
 
 @app.on_message(command(["تعطيل اليوتيوب"]) & filters.group)
