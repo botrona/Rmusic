@@ -1,3 +1,4 @@
+"""
 from pyrogram import Client
 from pyrogram.types import ChatMemberUpdated, InlineKeyboardMarkup, InlineKeyboardButton
 from ZeMusic import app
@@ -21,3 +22,4 @@ async def WelcomeDev(_, response: ChatMemberUpdated):
             photo="downloads/developer.jpg", 
             caption=f"↢ لقد انضم مطور السورس هنا  <a href='tg://user?id={dev_id}'>{name}</a> \n "
         )
+"""
