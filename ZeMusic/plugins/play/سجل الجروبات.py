@@ -65,14 +65,14 @@ async def welcome_new_member(client: Client, message: Message):
         chatusername = (message.chat.username if message.chat.username else "𝐏ʀɪᴠᴀᴛᴇ 𝐆ʀᴏᴜ𝑝")
         lemda_text = (
             f"🌹 تمت إضافة البوت إلى مجموعة جديدة.\n\n"
-            f"┏━━━━━━━━━━━━━━━━━┓\n"
-            f"┣★ <b>𝙲𝙷𝙰𝚃</b> › : {matlabi_jhanto}\n"
-            f"┣★ <b>𝙲𝙷𝙰𝚃 𝙸𝙳</b> › : {chat.id}\n"
-            f"┣★ <b>𝙲𝙷𝙰𝚃 𝚄𝙽𝙰𝙼𝙴</b> › : @{chatusername}\n"
-            f"┣★ <b>𝙲𝙾𝚄𝙽𝚃</b> › : {cont}\n"
-            f"┣★ <b>𝚃𝙾𝚃𝙰𝙻 𝙲𝙷𝙰𝚃𝚂</b> › : {served_chats}\n"
-            f"┣★ <b>𝙰𝙳𝙳𝙴𝙳 𝙱𝚈</b> › :\n"
-            f"┗━━━ꪜ <a href='tg://user?id={added_id}'>{added_by}</a>"
+            f"\n"
+            f" <b>𝙲𝙷𝙰𝚃</b> › : {matlabi_jhanto}\n"
+            f" <b>𝙲𝙷𝙰𝚃 𝙸𝙳</b> › : {chat.id}\n"
+            f" <b>𝙲𝙷𝙰𝚃 𝚄𝙽𝙰𝙼𝙴</b> › : @{chatusername}\n"
+            f" <b>𝙲𝙾𝚄𝙽𝚃</b> › : {cont}\n"
+            f" <b>𝚃𝙾𝚃𝙰𝙻 𝙲𝙷𝙰𝚃𝚂</b> › : {served_chats}\n"
+            f" <b>𝙰𝙳𝙳𝙴𝙳 𝙱𝚈</b> › :\n"
+            f" <a href='tg://user?id={added_id}'>{added_by}</a>"
         )
         
         
